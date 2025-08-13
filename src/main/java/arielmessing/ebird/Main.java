@@ -3,7 +3,8 @@ package arielmessing.ebird;
 import arielmessing.ebird.api.EBirdApiClient;
 import arielmessing.ebird.api.EBirdApiException;
 import arielmessing.ebird.api.product.ProductService;
-import arielmessing.ebird.api.regions.RegionsService;
+import arielmessing.ebird.api.regions.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.http.HttpClient;
 import java.util.List;
@@ -12,28 +13,29 @@ public class Main {
 
     public static void main(String[] args) throws EBirdApiException {
 
-        EBirdApiClient client =  new EBirdApiClient(
-                System.getenv("API-KEY"),
-                HttpClient.newBuilder().build());
+        String token = System.getenv("API-KEY");
 
-//        RegionsService service = new RegionsService(client);
-//        RegionInfo regionInfo = service.getRegionInfo(
-//                "CA",
-//                RegionInfoQueryParams.builder()
-//                        .regionNameFormat(RegionNameFormat.nameonly)
-//                        .build());
-//        System.out.println(regionInfo);
-//
-//        List<Region> countries = service.getSubRegionList(RegionType.country, "world");
-//        for (Region country : countries) {
-//            System.out.println(country.getName());
-//        }
+        EBirdApiClient client =  new EBirdApiClient(HttpClient.newBuilder().build(), new ObjectMapper());
 
-        ProductService service = new ProductService(client);
-        List<String> species = service.getSpeciesListForRegion("IL-JM");
-        for (String specie : species) {
-            System.out.println(specie);
+        RegionsService service = new RegionsService(client);
+        RegionInfo regionInfo = service.getRegionInfo(
+                "CA",
+                RegionInfoQueryParams.builder()
+                        .regionNameFormat(RegionNameFormat.nameonly)
+                        .build(),
+                token);
+        System.out.println(regionInfo);
+
+        List<Region> countries = service.getSubRegionList(RegionType.country, "world", token);
+        for (Region country : countries) {
+            System.out.println(country.getName());
         }
+
+//        ProductService service = new ProductService(client);
+//        List<String> species = service.getSpeciesListForRegion("IL-JM", token);
+//        for (String specie : species) {
+//            System.out.println(specie);
+//        }
 
 //        TaxonomyService service = new TaxonomyService(client);
 //        List<TaxonomyEntry> rook1 = service.getEBirdTaxonomy(List.of("rook1"));

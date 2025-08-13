@@ -31,7 +31,7 @@ class RegionsServiceTest {
 
     @BeforeEach
     void setUp() throws IOException, InterruptedException {
-        client = new EBirdApiClient("api-token", mockClient);
+        client = new EBirdApiClient(mockClient, objectMapper);
     }
 
     @Test
@@ -51,7 +51,8 @@ class RegionsServiceTest {
         RegionsService service = new RegionsService(client);
         RegionInfo response = service.getRegionInfo(
                 "CA-BC-GV",
-                null);
+                null,
+                "api-token");
 
         assertEquals(expected.getResult(), response.getResult());
     }
