@@ -1,23 +1,23 @@
 package arielmessing.ebird.api.regions;
 
-import arielmessing.ebird.api.EBirdApiException;
-import arielmessing.ebird.api.EBirdApiClient;
+import arielmessing.ebird.api.ApiClient;
+import arielmessing.ebird.api.ApiException;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class RegionsService {
 
-    private final EBirdApiClient client;
+    private final ApiClient client;
 
-    public RegionsService(EBirdApiClient client) {
+    public RegionsService(ApiClient client) {
         this.client = client;
     }
 
     public RegionInfo getRegionInfo(
             String regionCode,
             RegionInfoQueryParams queryParams,
-            String token) throws EBirdApiException {
+            String token) throws ApiException {
 
         var resourcePath = "ref/region/info/" + regionCode;
 
@@ -37,7 +37,7 @@ public class RegionsService {
     public List<Region> getSubRegionList(
             RegionType regionType,
             String parentRegionCode,
-            String token) throws EBirdApiException {
+            String token) throws ApiException {
 
         return Arrays.asList(client.getResource(
                         "ref/region/list/" +

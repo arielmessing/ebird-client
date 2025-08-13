@@ -1,9 +1,9 @@
 package arielmessing.ebird;
 
-import arielmessing.ebird.api.EBirdApiClient;
-import arielmessing.ebird.api.EBirdApiException;
-import arielmessing.ebird.api.product.ProductService;
+import arielmessing.ebird.api.ApiHttpClient;
+import arielmessing.ebird.api.ApiException;
 import arielmessing.ebird.api.regions.*;
+import arielmessing.ebird.api.regions.RegionsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.http.HttpClient;
@@ -11,11 +11,11 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws EBirdApiException {
+    public static void main(String[] args) throws ApiException {
 
         String token = System.getenv("API-KEY");
 
-        EBirdApiClient client =  new EBirdApiClient(HttpClient.newBuilder().build(), new ObjectMapper());
+        ApiHttpClient client =  new ApiHttpClient(HttpClient.newBuilder().build(), new ObjectMapper());
 
         RegionsService service = new RegionsService(client);
         RegionInfo regionInfo = service.getRegionInfo(

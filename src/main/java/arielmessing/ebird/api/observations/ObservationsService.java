@@ -1,7 +1,7 @@
 package arielmessing.ebird.api.observations;
 
-import arielmessing.ebird.api.EBirdApiClient;
-import arielmessing.ebird.api.EBirdApiException;
+import arielmessing.ebird.api.ApiClient;
+import arielmessing.ebird.api.ApiException;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -9,16 +9,16 @@ import java.util.List;
 
 public class ObservationsService {
 
-    private final EBirdApiClient client;
+    private final ApiClient client;
 
-    public ObservationsService(EBirdApiClient client) {
+    public ObservationsService(ApiClient client) {
         this.client = client;
     }
 
     public List<Observation> getHistoricObservationsOnDate(
             String regionCode,
             LocalDate date,
-            String token) throws EBirdApiException {
+            String token) throws ApiException {
 
         return Arrays.asList(client.getResource(
                         "data/obs/" +
