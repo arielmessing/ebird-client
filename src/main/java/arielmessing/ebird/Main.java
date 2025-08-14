@@ -4,6 +4,7 @@ import arielmessing.ebird.api.ApiHttpClient;
 import arielmessing.ebird.api.ApiException;
 import arielmessing.ebird.api.regions.*;
 import arielmessing.ebird.api.regions.RegionsService;
+import arielmessing.ebird.api.taxonomy.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.http.HttpClient;
@@ -17,19 +18,19 @@ public class Main {
 
         ApiHttpClient client =  new ApiHttpClient(HttpClient.newBuilder().build(), new ObjectMapper());
 
-        RegionsService service = new RegionsService(client);
-        RegionInfo regionInfo = service.getRegionInfo(
-                "CA",
-                RegionInfoQueryParams.builder()
-                        .regionNameFormat(RegionNameFormat.nameonly)
-                        .build(),
-                token);
-        System.out.println(regionInfo);
-
-        List<Region> countries = service.getSubRegionList(RegionType.country, "world", token);
-        for (Region country : countries) {
-            System.out.println(country.getName());
-        }
+//        RegionsService service = new RegionsService(client);
+//        RegionInfo regionInfo = service.getRegionInfo(
+//                "CA",
+//                RegionInfoQueryParams.builder()
+//                        .regionNameFormat(RegionNameFormat.nameonly)
+//                        .build(),
+//                token);
+//        System.out.println(regionInfo);
+//
+//        List<Region> countries = service.getSubRegionList(RegionType.country, "world", token);
+//        for (Region country : countries) {
+//            System.out.println(country.getName());
+//        }
 
 //        ProductService service = new ProductService(client);
 //        List<String> species = service.getSpeciesListForRegion("IL-JM", token);
