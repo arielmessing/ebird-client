@@ -17,7 +17,7 @@ public final class ApiHttpClient implements ApiClient {
     private final ObjectMapper objectMapper;
 
     public ApiHttpClient(HttpClient httpClient, ObjectMapper objectMapper) {
-        this.baseUrl = System.getenv("API-URL");
+        this.baseUrl = System.getenv("API_URL");
 
         this.httpClient = httpClient;
         this.objectMapper = objectMapper;

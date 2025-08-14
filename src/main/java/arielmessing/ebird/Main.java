@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) throws ApiException {
 
-        String token = System.getenv("API-KEY");
+        String token = System.getenv("API_KEY");
 
         ApiHttpClient client =  new ApiHttpClient(HttpClient.newBuilder().build(), new ObjectMapper());
 
