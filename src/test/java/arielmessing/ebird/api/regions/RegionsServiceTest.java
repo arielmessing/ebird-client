@@ -19,9 +19,10 @@ class RegionsServiceTest {
     private ApiClient mockClient;
 
     @Test
-    void testGetRegionInfo_NoQueryParams() throws IOException, InterruptedException, ApiException {
-        RegionInfo expected = new RegionInfo();
-        expected.setResult("Metro Vancouver District, British Columbia, CA");
+    void testGetRegionInfo_NoQueryParams() throws ApiException {
+        RegionInfo expected = new RegionInfo(
+                "Metro Vancouver District, British Columbia, CA",
+                null, null, null, 0.0, 0.0, null);
 
         String regionCode = "CA-BC-GV";
         String token = "api-token";
@@ -36,8 +37,9 @@ class RegionsServiceTest {
                 new RegionsService(mockClient).getRegionInfo(
                     regionCode,
                     null,
+                    null,
                     token);
 
-        assertEquals(expected.getResult(), response.getResult());
+        assertEquals(expected.result(), response.result());
     }
 }

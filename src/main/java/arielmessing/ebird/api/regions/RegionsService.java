@@ -8,6 +8,9 @@ import java.util.List;
 
 public class RegionsService {
 
+    private static final char QUERY_SEPARATOR_START = '?';
+    private static final char QUERY_SEPARATOR_JOIN = '&';
+
     private final ApiClient client;
 
     public RegionsService(ApiClient client) {
@@ -16,22 +19,23 @@ public class RegionsService {
 
     public RegionInfo getRegionInfo(
             String regionCode,
-            RegionInfoQueryParams queryParams,
+            RegionNameFormat regionNameFormat,
+            String delim,
             String token) throws ApiException {
 
-        var resourcePath = "ref/region/info/" + regionCode;
+        StringBuilder sb = new StringBuilder("ref/region/info/").append(regionCode);
 
-        if (queryParams != null) {
-            resourcePath += "?";
+        char querySeparator = QUERY_SEPARATOR_START;
 
-            if (queryParams.regionNameFormat() != null)
-                resourcePath += "regionNameFormat=" + queryParams.regionNameFormat().name() + "&";
+        if (regionNameFormat != null) {
+            sb.append(querySeparator).append("regionNameFormat=").append(regionNameFormat);
 
-            if (queryParams.delim() != null)
-                resourcePath += "delim=" + queryParams.delim();
+            querySeparator = QUERY_SEPARATOR_JOIN;
         }
 
-        return client.getResource(resourcePath, token, RegionInfo.class);
+        if (delim != null) sb.append(querySeparator).append("delim=").append(delim);
+
+        return client.getResource(sb.toString(), token, RegionInfo.class);
     }
 
     public List<Region> getSubRegionList(
@@ -40,11 +44,7 @@ public class RegionsService {
             String token) throws ApiException {
 
         return Arrays.asList(client.getResource(
-                        "ref/region/list/" +
-                                regionType.name() +
-                                "/" +
-                                parentRegionCode +
-                                "?fmt=json",
+                "ref/region/list/%s/%s?fmt=json".formatted(regionType, parentRegionCode),
                 token,
                 Region[].class));
     }
