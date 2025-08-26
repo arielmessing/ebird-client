@@ -1,13 +1,10 @@
 package arielmessing.ebird.api.regions;
 
 import arielmessing.ebird.api.ApiClient;
-import arielmessing.ebird.api.ApiException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -19,7 +16,7 @@ class RegionsServiceTest {
     private ApiClient mockClient;
 
     @Test
-    void testGetRegionInfo_NoQueryParams() throws ApiException {
+    void testGetRegionInfo_NoQueryParams() {
         RegionInfo expected = new RegionInfo(
                 "Metro Vancouver District, British Columbia, CA",
                 null, null, null, 0.0, 0.0, null);

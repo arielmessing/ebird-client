@@ -1,6 +1,5 @@
 package arielmessing.ebird.api.geography;
 
-import arielmessing.ebird.api.ApiException;
 import arielmessing.ebird.api.ApiHttpClient;
 import arielmessing.ebird.api.regions.Region;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +26,7 @@ class GeographyServiceIT {
     }
 
     @Test
-    void getAdjacentRegions() throws ApiException {
+    void getAdjacentRegions() {
         var regionCode = "IL";
         List<Region> regions = service.getAdjacentRegions(regionCode, token);
 

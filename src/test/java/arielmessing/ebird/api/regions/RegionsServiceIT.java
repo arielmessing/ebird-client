@@ -1,6 +1,5 @@
 package arielmessing.ebird.api.regions;
 
-import arielmessing.ebird.api.ApiException;
 import arielmessing.ebird.api.ApiHttpClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,7 +25,7 @@ class RegionsServiceIT {
     }
 
     @Test
-    void getRegionInfo() throws ApiException {
+    void getRegionInfo() {
         String delim = "@@";
 
         RegionInfo info = service.getRegionInfo("IL-JM", RegionNameFormat.full, delim, token);
@@ -35,7 +34,7 @@ class RegionsServiceIT {
     }
 
     @Test
-    void getSubRegionList() throws ApiException {
+    void getSubRegionList() {
         List<Region> regions = service.getSubRegionList(RegionType.subnational1, "IL", token);
 
         assertFalse(regions.isEmpty());

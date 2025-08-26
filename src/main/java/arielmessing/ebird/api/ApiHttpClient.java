@@ -11,6 +11,9 @@ import java.net.http.HttpResponse;
 
 public final class ApiHttpClient implements ApiClient {
 
+    static final int STATUS_OK = 200;
+    static final int STATUS_BAD_REQUEST = 400;
+
     private final String baseUrl;
 
     private final HttpClient httpClient;
@@ -24,7 +27,7 @@ public final class ApiHttpClient implements ApiClient {
     }
 
     @Override
-    public <T> T getResource(String resourcePath, String token, Class<T> responseType) throws ApiException {
+    public <T> T getResource(String resourcePath, String token, Class<T> responseType) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(baseUrl + resourcePath))
@@ -35,8 +38,15 @@ public final class ApiHttpClient implements ApiClient {
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() == 200) {
+            if (response.statusCode() == STATUS_OK) {
                 return objectMapper.readValue(response.body(), responseType);
+
+            } else if (response.statusCode() == STATUS_BAD_REQUEST) {
+
+                ApiBadRequest badRequest =
+                        objectMapper.readValue(response.body(), ApiBadRequest.class);
+
+                throw new ApiBadRequestException("Request failed with error(s)", badRequest);
 
             } else {
                 throw new ApiException("Request failed with status: " + response.statusCode());

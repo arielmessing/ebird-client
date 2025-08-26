@@ -1,6 +1,5 @@
 package arielmessing.ebird.api.taxonomy;
 
-import arielmessing.ebird.api.ApiException;
 import arielmessing.ebird.api.ApiHttpClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,7 +26,7 @@ class TaxonomyServiceIT {
     }
 
     @Test
-    void getEBirdTaxonomy() throws ApiException {
+    void getEBirdTaxonomy() {
         var rockPigeon = "rocpig1";
 
         List<TaxonomyEntry> taxonomy =
@@ -42,24 +41,24 @@ class TaxonomyServiceIT {
     }
 
     @Test
-    void getTaxonomicForms() throws ApiException {
+    void getTaxonomicForms() {
         service.getTaxonomicForms("virrie", token);
     }
 
     @Test
-    void getTaxaLocaleCodes() throws ApiException {
+    void getTaxaLocaleCodes() {
         List<TaxaLocaleCode> codes = service.getTaxaLocaleCodes(token);
         assertFalse(codes.isEmpty());
     }
 
     @Test
-    void getTaxonomyVersions() throws ApiException {
+    void getTaxonomyVersions() {
         List<TaxonomyVersion> versions = service.getTaxonomyVersions();
         assertFalse(versions.isEmpty());
     }
 
     @Test
-    void getTaxonomicGroups() throws ApiException {
+    void getTaxonomicGroups() {
         List<TaxonomicGroup> groups = service.getTaxonomicGroups(SpeciesGrouping.ebird, "en", token);
         assertFalse(groups.isEmpty());
     }

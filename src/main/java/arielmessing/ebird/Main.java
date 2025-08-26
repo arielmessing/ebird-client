@@ -1,7 +1,6 @@
 package arielmessing.ebird;
 
 import arielmessing.ebird.api.ApiHttpClient;
-import arielmessing.ebird.api.ApiException;
 import arielmessing.ebird.api.regions.*;
 import arielmessing.ebird.api.regions.RegionsService;
 import arielmessing.ebird.api.taxonomy.*;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws ApiException {
+    public static void main(String[] args) {
 
         String token = System.getenv("API_KEY");
 

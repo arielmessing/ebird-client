@@ -1,7 +1,6 @@
 package arielmessing.ebird.api.regions;
 
 import arielmessing.ebird.api.ApiClient;
-import arielmessing.ebird.api.ApiException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +20,7 @@ public class RegionsService {
             String regionCode,
             RegionNameFormat regionNameFormat,
             String delim,
-            String token) throws ApiException {
+            String token) {
 
         StringBuilder sb = new StringBuilder("ref/region/info/").append(regionCode);
 
@@ -41,7 +40,7 @@ public class RegionsService {
     public List<Region> getSubRegionList(
             RegionType regionType,
             String parentRegionCode,
-            String token) throws ApiException {
+            String token) {
 
         return Arrays.asList(client.getResource(
                 "ref/region/list/%s/%s?fmt=json".formatted(regionType, parentRegionCode),

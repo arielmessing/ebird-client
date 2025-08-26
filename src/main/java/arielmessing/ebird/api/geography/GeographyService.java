@@ -1,7 +1,6 @@
 package arielmessing.ebird.api.geography;
 
 import arielmessing.ebird.api.ApiClient;
-import arielmessing.ebird.api.ApiException;
 import arielmessing.ebird.api.regions.Region;
 
 import java.util.Arrays;
@@ -15,7 +14,7 @@ public class GeographyService {
         this.client = client;
     }
 
-    public List<Region> getAdjacentRegions(String regionCode, String token) throws ApiException {
+    public List<Region> getAdjacentRegions(String regionCode, String token) {
         return Arrays.asList(client.getResource(
                 "ref/adjacent/" + regionCode,
                 token,

@@ -1,7 +1,6 @@
 package arielmessing.ebird.api.taxonomy;
 
 import arielmessing.ebird.api.ApiClient;
-import arielmessing.ebird.api.ApiException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +18,7 @@ public class TaxonomyService {
             TaxonomyCategory category,
             List<String> species,
             String version,
-            String locale) throws ApiException {
+            String locale) {
 
         StringBuilder sb = new StringBuilder("ref/taxonomy/ebird?fmt=json");
         if (category != null) sb.append("&cat=").append(category);
@@ -30,28 +29,32 @@ public class TaxonomyService {
         return Arrays.asList(client.getResource(sb.toString(), NO_TOKEN, TaxonomyEntry[].class));
     }
 
-    public List<String> getTaxonomicForms(String speciesCode, String token) throws ApiException {
+    public List<String> getTaxonomicForms(String speciesCode, String token) {
         return Arrays.asList(client.getResource(
                 "ref/taxon/forms/" + speciesCode,
                 token,
                 String[].class));
     }
 
-    public List<TaxaLocaleCode> getTaxaLocaleCodes(String token) throws ApiException {
+    public List<TaxaLocaleCode> getTaxaLocaleCodes(String token) {
         return Arrays.asList(client.getResource(
                 "ref/taxa-locales/ebird",
                 token,
                 TaxaLocaleCode[].class));
     }
 
-    public List<TaxonomyVersion> getTaxonomyVersions() throws ApiException {
+    public List<TaxonomyVersion> getTaxonomyVersions() {
         return Arrays.asList(client.getResource(
                 "ref/taxonomy/versions",
                 NO_TOKEN,
                 TaxonomyVersion[].class));
     }
 
-    public List<TaxonomicGroup> getTaxonomicGroups(SpeciesGrouping speciesGrouping, String groupNameLocale, String token) throws ApiException {
+    public List<TaxonomicGroup> getTaxonomicGroups(
+            SpeciesGrouping speciesGrouping,
+            String groupNameLocale,
+            String token) {
+
         return Arrays.asList(client.getResource(
                 "ref/sppgroup/%s?groupNameLocale=%s".formatted(speciesGrouping, groupNameLocale),
                 token,

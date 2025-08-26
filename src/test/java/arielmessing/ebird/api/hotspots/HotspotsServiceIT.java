@@ -1,6 +1,5 @@
 package arielmessing.ebird.api.hotspots;
 
-import arielmessing.ebird.api.ApiException;
 import arielmessing.ebird.api.ApiHttpClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,14 +25,14 @@ class HotspotsServiceIT {
     }
 
     @Test
-    void getHotspotsInRegion() throws ApiException {
+    void getHotspotsInRegion() {
         List<Hotspot> hotspotsInRegion = service.getHotspotsInRegion("GB-ENG-KEN", null, token);
 
         assertFalse(hotspotsInRegion.isEmpty());
     }
 
     @Test
-    void getHotspotInfo() throws ApiException {
+    void getHotspotInfo() {
         String locationCode = "L918439";
         HotspotInfo info = service.getHotspotInfo(locationCode, token);
 
@@ -41,7 +40,7 @@ class HotspotsServiceIT {
     }
 
     @Test
-    void getNearbyHotspots() throws ApiException {
+    void getNearbyHotspots() {
         List<Hotspot> nearbyHotspots = service.getNearbyHotspots(50.9309436, 0.9394598, null, null, token);
 
         assertFalse(nearbyHotspots.isEmpty());
