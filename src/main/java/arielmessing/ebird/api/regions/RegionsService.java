@@ -32,18 +32,18 @@ public class RegionsService {
             querySeparator = QUERY_SEPARATOR_JOIN;
         }
 
-        if (delim != null) sb.append(querySeparator).append("delim=").append(delim);
+        if (delim != null && ! delim.isEmpty()) sb.append(querySeparator).append("delim=").append(delim);
 
         return client.getResource(sb.toString(), token, RegionInfo.class);
     }
 
     public List<Region> getSubRegionList(
-            RegionType regionType,
+            RegionType subRegionType,
             String parentRegionCode,
             String token) {
 
         return Arrays.asList(client.getResource(
-                "ref/region/list/%s/%s?fmt=json".formatted(regionType, parentRegionCode),
+                "ref/region/list/%s/%s?fmt=json".formatted(subRegionType, parentRegionCode),
                 token,
                 Region[].class));
     }
