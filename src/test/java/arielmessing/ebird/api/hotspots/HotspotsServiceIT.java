@@ -1,6 +1,6 @@
 package arielmessing.ebird.api.hotspots;
 
-import arielmessing.ebird.api.ApiHttpClient;
+import arielmessing.ebird.api.ApiClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class HotspotsServiceIT {
     static void globalSetUp() {
         token = System.getenv("API_KEY");
 
-        ApiHttpClient client =  new ApiHttpClient(HttpClient.newBuilder().build(), new ObjectMapper());
+        ApiClient client = new ApiClient(HttpClient.newBuilder().build(), new ObjectMapper());
         service = new HotspotsService(client);
     }
 

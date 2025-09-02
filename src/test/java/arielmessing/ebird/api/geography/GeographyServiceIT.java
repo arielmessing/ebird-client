@@ -1,6 +1,6 @@
 package arielmessing.ebird.api.geography;
 
-import arielmessing.ebird.api.ApiHttpClient;
+import arielmessing.ebird.api.ApiClient;
 import arielmessing.ebird.api.regions.Region;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,7 +21,7 @@ class GeographyServiceIT {
     static void globalSetUp() {
         token = System.getenv("API_KEY");
 
-        ApiHttpClient client =  new ApiHttpClient(HttpClient.newBuilder().build(), new ObjectMapper());
+        ApiClient client = new ApiClient(HttpClient.newBuilder().build(), new ObjectMapper());
         service = new GeographyService(client);
     }
 

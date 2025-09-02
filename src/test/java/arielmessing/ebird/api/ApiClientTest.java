@@ -1,7 +1,5 @@
 package arielmessing.ebird.api;
 
-import arielmessing.ebird.api.regions.RegionInfo;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,17 +11,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
-import java.util.List;
 
-import static arielmessing.ebird.api.ApiHttpClient.STATUS_BAD_REQUEST;
-import static arielmessing.ebird.api.ApiHttpClient.STATUS_OK;
+import static arielmessing.ebird.api.ApiClient.STATUS_BAD_REQUEST;
+import static arielmessing.ebird.api.ApiClient.STATUS_OK;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ApiHttpClientTest {
+class ApiClientTest {
 
     @Mock
     private HttpClient mockHttpClient;
@@ -34,11 +31,11 @@ class ApiHttpClientTest {
     @Mock
     private HttpResponse<String> mockResponse;
 
-    private ApiHttpClient client;
+    private ApiClient client;
 
     @BeforeEach
     void setUp() {
-        client = new ApiHttpClient(mockHttpClient, mockObjectMapper);
+        client = new ApiClient(mockHttpClient, mockObjectMapper);
     }
 
     @Test
