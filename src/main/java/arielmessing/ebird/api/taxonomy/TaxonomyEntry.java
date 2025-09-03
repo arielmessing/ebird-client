@@ -15,4 +15,6 @@ public record TaxonomyEntry(
      String familyCode,
      String familyComName,
      String familySciName,
-     String reportAs) {}
+     String reportAs,
+     boolean extinct,
+     String extinctYear) {}
