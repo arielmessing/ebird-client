@@ -59,7 +59,7 @@ class TaxonomyServiceIT {
 
     @Test
     void getTaxonomicGroups() {
-        List<TaxonomicGroup> groups = service.getTaxonomicGroups(SpeciesGrouping.ebird, "en", token);
+        List<TaxonomicGroup> groups = service.getTaxonomicGroups(SpeciesGrouping.ebird, null);
         assertFalse(groups.isEmpty());
     }
 }

@@ -52,12 +52,11 @@ public class TaxonomyService {
 
     public List<TaxonomicGroup> getTaxonomicGroups(
             SpeciesGrouping speciesGrouping,
-            String groupNameLocale,
-            String token) {
+            String groupNameLocale) {
 
-        return Arrays.asList(client.getResource(
-                "ref/sppgroup/%s?groupNameLocale=%s".formatted(speciesGrouping, groupNameLocale),
-                token,
-                TaxonomicGroup[].class));
+        StringBuilder sb = new StringBuilder("ref/sppgroup/").append(speciesGrouping);
+        if (groupNameLocale != null) sb.append("?groupNameLocale=").append(groupNameLocale);
+
+        return Arrays.asList(client.getResource(sb.toString(), NO_TOKEN, TaxonomicGroup[].class));
     }
 }
