@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
-import static arielmessing.ebird.api.ApiClient.STATUS_BAD_REQUEST;
-import static arielmessing.ebird.api.ApiClient.STATUS_OK;
+import static arielmessing.ebird.api.ApiClient.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
@@ -72,6 +71,18 @@ class ApiClientTest {
         assertNotNull(ex.badRequest);
         assertEquals(1, ex.badRequest.errors().length);
         assertEquals(error, ex.badRequest.errors()[0]);
+    }
+
+    @Test
+    void getResource_handleForbidden() throws Exception {
+        when(mockHttpClient.send(any(), eq(HttpResponse.BodyHandlers.ofString()))).thenReturn(mockResponse);
+
+        when(mockResponse.statusCode()).thenReturn(STATUS_FORBIDDEN);
+
+        ApiForbiddenException ex = assertThrows(
+                ApiForbiddenException.class,
+                () -> client.getResource("path/to/resource", "token", Object.class)
+        );
     }
 
     @Test

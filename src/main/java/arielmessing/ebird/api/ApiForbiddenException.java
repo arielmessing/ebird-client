@@ -1,7 +1,7 @@
 package arielmessing.ebird.api;
 
-public class ApiAccessDeniedException extends RuntimeException {
-    public ApiAccessDeniedException() {
+public class ApiForbiddenException extends RuntimeException {
+    public ApiForbiddenException() {
         super();
     }
 }

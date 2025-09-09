@@ -13,6 +13,7 @@ public final class ApiClient {
 
     static final int STATUS_OK = 200;
     static final int STATUS_BAD_REQUEST = 400;
+    static final int STATUS_FORBIDDEN = 403;
 
     private final String baseUrl;
 
@@ -46,6 +47,9 @@ public final class ApiClient {
                         objectMapper.readValue(response.body(), ApiBadRequest.class);
 
                 throw new ApiBadRequestException("Request failed with error(s)", badRequest);
+
+            } else if (response.statusCode() == STATUS_FORBIDDEN) {
+                throw new ApiForbiddenException();
 
             } else {
                 throw new ApiException("Request failed with status: " + response.statusCode());
