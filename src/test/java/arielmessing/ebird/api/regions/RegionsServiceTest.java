@@ -4,6 +4,8 @@ import arielmessing.ebird.api.ApiClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -39,7 +41,23 @@ class RegionsServiceTest {
 
         RegionInfo response = service.getRegionInfo(regionCode, null, null, "token");
 
+        verify(mockApiClient).getResource(
+                argThat(s -> s != null && ! s.contains("regionNameFormat=") && ! s.contains("delim=")),
+                anyString(),
+                any());
+
         assertEquals(expected.result(), response.result());
+    }
+
+    @ParameterizedTest
+    @EnumSource(RegionNameFormat.class)
+    void testGetRegionInfo_emptyRegionNameFormat(RegionNameFormat regionNameFormat) {
+        service.getRegionInfo("regionCode", regionNameFormat, null, "token");
+
+        verify(mockApiClient).getResource(
+                contains("regionNameFormat=%s".formatted(regionNameFormat)),
+                anyString(),
+                any());
     }
 
     @Test
@@ -50,6 +68,5 @@ class RegionsServiceTest {
                 argThat(s -> s != null && ! s.contains("delim=")),
                 anyString(),
                 any());
-
     }
 }
