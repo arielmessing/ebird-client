@@ -52,7 +52,7 @@ public class TaxonomyService {
 
     public List<TaxonomicGroup> getTaxonomicGroups(
             SpeciesGrouping speciesGrouping,
-            String groupNameLocale) {
+            GroupNameLocale groupNameLocale) {
 
         StringBuilder sb = new StringBuilder("ref/sppgroup/").append(speciesGrouping);
         if (groupNameLocale != null) sb.append("?groupNameLocale=").append(groupNameLocale);
