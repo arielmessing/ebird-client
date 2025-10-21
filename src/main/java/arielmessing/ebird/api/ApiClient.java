@@ -11,6 +11,9 @@ import java.net.http.HttpResponse;
 
 public final class ApiClient {
 
+    private static final String DEFAULT_BASE_URL = "https://api.ebird.org/v2/";
+    private static final String BASE_URL_PROPERTY = "api.base.url";
+
     static final int STATUS_OK = 200;
     static final int STATUS_BAD_REQUEST = 400;
     static final int STATUS_FORBIDDEN = 403;
@@ -21,7 +24,11 @@ public final class ApiClient {
     private final ObjectMapper objectMapper;
 
     public ApiClient(HttpClient httpClient, ObjectMapper objectMapper) {
-        this.baseUrl = System.getenv("API_URL");
+        this(System.getProperty(BASE_URL_PROPERTY, DEFAULT_BASE_URL), httpClient, objectMapper);
+    }
+
+    public ApiClient(String baseUrl, HttpClient httpClient, ObjectMapper objectMapper) {
+        this.baseUrl = baseUrl;
 
         this.httpClient = httpClient;
         this.objectMapper = objectMapper;
