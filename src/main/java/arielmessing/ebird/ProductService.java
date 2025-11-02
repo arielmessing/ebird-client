@@ -6,11 +6,9 @@ import arielmessing.ebird.client.EbirdApiClient;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.StringJoiner;
 
 public final class ProductService {
-
-    private static final char QUERY_SEPARATOR_START = '?';
-    private static final char QUERY_SEPARATOR_JOIN = '&';
 
     private final EbirdApiClient client;
 
@@ -25,22 +23,15 @@ public final class ProductService {
             Integer maxResults,
             String token) {
 
-        StringBuilder sb = new StringBuilder("product/top100/").append(regionCode)
-                .append("/").append(date.getYear())
-                .append("/").append(date.getMonthValue())
-                .append("/").append(date.getDayOfMonth());
+        var requestParams = new StringJoiner("&");
+        if (rankedBy != null)   requestParams.add("rankedBy=" + rankedBy.value);
+        if (maxResults != null) requestParams.add("maxResults=" + maxResults);
 
-        char querySeparator = QUERY_SEPARATOR_START;
-
-        if (rankedBy != null) {
-            sb.append(querySeparator).append("rankedBy=").append(rankedBy.value);
-
-            querySeparator = QUERY_SEPARATOR_JOIN;
-        }
-
-        if (maxResults != null) sb.append(querySeparator).append("maxResults=").append(maxResults);
-
-        return client.getResourceAsListOf(sb.toString(), token, Contributor.class);
+        return client.getResourceAsListOf(
+                "product/top100/%s/%d/%d/%d?%s".formatted(
+                        regionCode, date.getYear(), date.getMonthValue(), date.getDayOfMonth(), requestParams),
+                token,
+                Contributor.class);
     }
 
     public List<String> getSpeciesListForRegion(String regionCode, String token) {

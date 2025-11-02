@@ -7,11 +7,9 @@ import arielmessing.ebird.api.regions.RegionType;
 import arielmessing.ebird.client.EbirdApiClient;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 public final class RegionsService {
-
-    private static final char QUERY_SEPARATOR_START = '?';
-    private static final char QUERY_SEPARATOR_JOIN = '&';
 
     private final EbirdApiClient client;
 
@@ -25,19 +23,14 @@ public final class RegionsService {
             String delim,
             String token) {
 
-        StringBuilder sb = new StringBuilder("ref/region/info/").append(regionCode);
+        var requestParams = new StringJoiner("&");
+        if (regionNameFormat != null)           requestParams.add("regionNameFormat=" + regionNameFormat);
+        if (delim != null && ! delim.isEmpty()) requestParams.add("delim=" + delim);
 
-        char querySeparator = QUERY_SEPARATOR_START;
-
-        if (regionNameFormat != null) {
-            sb.append(querySeparator).append("regionNameFormat=").append(regionNameFormat);
-
-            querySeparator = QUERY_SEPARATOR_JOIN;
-        }
-
-        if (delim != null && ! delim.isEmpty()) sb.append(querySeparator).append("delim=").append(delim);
-
-        return client.getResource(sb.toString(), token, RegionInfo.class);
+        return client.getResource(
+                "ref/region/info/%s?%s".formatted(regionCode, requestParams),
+                token,
+                RegionInfo.class);
     }
 
     public List<Region> getSubRegionList(
