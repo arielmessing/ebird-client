@@ -36,7 +36,7 @@ class RegionsServiceTest {
         String regionCode = "CA-BC-GV";
 
         when(client.getResource(
-                endsWith(regionCode),
+                contains(regionCode),
                 anyString(),
                 eq(RegionInfo.class)
         )).thenReturn(expected);
