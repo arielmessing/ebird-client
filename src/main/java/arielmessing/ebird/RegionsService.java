@@ -1,13 +1,9 @@
 package arielmessing.ebird;
 
-import arielmessing.ebird.api.regions.Region;
-import arielmessing.ebird.api.regions.RegionInfo;
-import arielmessing.ebird.api.regions.RegionNameFormat;
-import arielmessing.ebird.api.regions.RegionType;
+import arielmessing.ebird.api.regions.*;
 import arielmessing.ebird.client.EbirdApiClient;
 
 import java.util.List;
-import java.util.StringJoiner;
 
 public final class RegionsService {
 
@@ -23,12 +19,8 @@ public final class RegionsService {
             String delim,
             String token) {
 
-        var requestParams = new StringJoiner("&");
-        if (regionNameFormat != null)           requestParams.add("regionNameFormat=" + regionNameFormat);
-        if (delim != null && ! delim.isEmpty()) requestParams.add("delim=" + delim);
-
         return client.getResource(
-                "ref/region/info/%s?%s".formatted(regionCode, requestParams),
+                RegionsEndpoints.regionInfo(regionCode, regionNameFormat, delim),
                 token,
                 RegionInfo.class);
     }
@@ -39,7 +31,7 @@ public final class RegionsService {
             String token) {
 
         return client.getResourceAsListOf(
-                "ref/region/list/%s/%s?fmt=json".formatted(subRegionType, parentRegionCode),
+                RegionsEndpoints.subRegionList(subRegionType, parentRegionCode),
                 token,
                 Region.class);
     }
