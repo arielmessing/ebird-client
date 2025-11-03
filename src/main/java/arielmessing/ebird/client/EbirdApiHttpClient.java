@@ -48,23 +48,35 @@ public final class EbirdApiHttpClient implements EbirdApiClient {
     }
 
     @Override
-    public <T> List<T> getResourceAsListOf(String resourcePath, String token, Class<T> elementType) {
-        var type = objectMapper.getTypeFactory().constructCollectionType(List.class, elementType);
+    public <T> List<T> getResourceAsListOf(String resourcePath, String token, Class<T> listElementType) {
+        var type = objectMapper.getTypeFactory().constructCollectionType(List.class, listElementType);
 
         return getResource(resourcePath, token, type);
     }
 
     <T> T getResource(String resourcePath, String token, JavaType responseType) {
+        HttpRequest request = buildRequest(resourcePath, token);
+
         try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .GET()
-                    .uri(URI.create(baseUrl + resourcePath))
-                    .header("Accept", "application/json")
-                    .header("X-eBirdApiToken", token)
-                    .build();
-
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            return parseResponseAs(response, responseType);
 
+        } catch (IOException | InterruptedException e) {
+            throw new EbirdException("Error during API call", e);
+        }
+    }
+
+    private HttpRequest buildRequest(String resourcePath, String token) {
+        return HttpRequest.newBuilder()
+                .GET()
+                .uri(URI.create(baseUrl + resourcePath))
+                .header("Accept", "application/json")
+                .header("X-eBirdApiToken", token)
+                .build();
+    }
+
+    private <T> T parseResponseAs(HttpResponse<String> response, JavaType responseType) {
+        try {
             if (response.statusCode() == STATUS_OK) {
                 return objectMapper.readValue(response.body(), responseType);
 
@@ -83,9 +95,6 @@ public final class EbirdApiHttpClient implements EbirdApiClient {
             }
         } catch (JsonProcessingException e) {
             throw new EbirdException("Error parsing response", e);
-
-        } catch (IOException | InterruptedException e) {
-            throw new EbirdException("Error during API call", e);
         }
     }
 }
